@@ -1,9 +1,4 @@
-import { Country } from "@/types/country"; // Importando os tipos
-
-
-
-// Função GET tipada
-export async function GET(): Promise<Response> {
+export async function GET() {
   const res = await fetch('https://restcountries.com/v3.1/all', {
     method: 'GET',
     headers: {
@@ -12,7 +7,7 @@ export async function GET(): Promise<Response> {
     },
   });
 
-  const data: Country[] = await res.json(); // Tipando os dados da resposta da API
+  const data = await res.json();
   
   return Response.json({ data });
 }

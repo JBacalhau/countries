@@ -1,20 +1,16 @@
 'use client';
-
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Country } from "@/types/Cards"; // Importa a tipagem Country
 import { PulseLoader } from "react-spinners";
-
 interface CardsProps {
     searchTerm: string; // Termo de pesquisa
     filterRegion: string; // Região filtrada
 }
-
 export default function Cards({ searchTerm, filterRegion }: CardsProps) {
     const [countries, setCountries] = useState<Country[]>([]); // Estado para armazenar os países
     const [loading, setLoading] = useState<boolean>(true); // Estado de carregamento
     const [error, setError] = useState<string | null>(null); // Estado de erro
-
     const getData = async () => {
         try {
             const response = await fetch("/api/");
@@ -30,25 +26,20 @@ export default function Cards({ searchTerm, filterRegion }: CardsProps) {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         getData();
     }, []);
-
     const filteredCountries = countries.filter((country) => {
         const matchesSearchTerm = country.name.common.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesRegion = searchTerm || filterRegion === "All" || country.region === filterRegion;
         return matchesSearchTerm && matchesRegion;
     });
-
     if (loading) {
         return <div><PulseLoader color="hsl(0, 0%, 52%)" /></div>;
     }
-
     if (error) {
         return <div>{error}</div>;
     }
-
     return (
         <div className="flex max-w-[1440px] mx-auto justify-center items-center gap-x-[73px] px-4 gap-y-[76px] flex-wrap">
             {filteredCountries.map((country) => (
