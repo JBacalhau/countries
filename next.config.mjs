@@ -10,15 +10,7 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/api',
-        destination: '/api-docs',
-        permanent: true, // Redireciona permanentemente
-      },
-    ];
-  },
+  
   env: {
     NEXT_PUBLIC_API_URL: 'https://restcountries.com/v3.1', // Configura variável de ambiente
   },

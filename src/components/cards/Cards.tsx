@@ -13,7 +13,14 @@ export default function Cards({ searchTerm, filterRegion }: CardsProps) {
     const [error, setError] = useState<string | null>(null); // Estado de erro
     const getData = async () => {
         try {
-            const response = await fetch("/api/");
+            const response = await fetch("/api/", {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json',
+                },
+              });
+            console.log(response)
             if (!response.ok) {
                 throw new Error("Falha ao carregar dados da API");
             }
