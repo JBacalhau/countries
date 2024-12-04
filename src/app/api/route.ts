@@ -1,30 +1,23 @@
-// pages/api/countries.ts
+import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
-    const res = await fetch('https://restcountries.com/v3.1/all', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
-
+    const res = await fetch('https://restcountries.com/v3.1/all');
+    
     if (!res.ok) {
-      throw new Error(`Erro ao carregar dados dos países. Status: ${res.status}`);
+      throw new Error('Erro ao buscar dados da API');
     }
-
     const data = await res.json();
-
-    return new Response(JSON.stringify({ data }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    
+    return NextResponse.json({ data });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: 'Erro ao carregar dados da API' }),
+    console.error("Error fetching data:", error); // Logue o erro
+    return NextResponse.json(
+      { error: 'Falha ao buscar dados da API' },
       { status: 500 }
     );
   }
 }
+
+
 

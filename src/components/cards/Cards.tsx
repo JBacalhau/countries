@@ -11,28 +11,33 @@ export default function Cards({ searchTerm, filterRegion }: CardsProps) {
     const [countries, setCountries] = useState<Country[]>([]); // Estado para armazenar os países
     const [loading, setLoading] = useState<boolean>(true); // Estado de carregamento
     const [error, setError] = useState<string | null>(null); // Estado de erro
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+
     const getData = async () => {
         try {
-            const response = await fetch("/api/", {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  Accept: 'application/json',
-                },
-              });
-            console.log(response)
-            if (!response.ok) {
-                throw new Error("Falha ao carregar dados da API");
-            }
-            const data = await response.json();
-            setCountries(data.data);
+          const response = await fetch("/api/", {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+          });
+          console.log("Response:", response); // Verifique a resposta
+          if (!response.ok) {
+            throw new Error("Falha ao carregar dados da API");
+          }
+          const data = await response.json();
+          console.log("Fetched data:", data); // Verifique os dados
+          setCountries(data.data);
         } catch (error) {
-            console.error(error);
-            setError("Falha ao carregar dados da API");
+          console.error("Error:", error);
+          setError("Falha ao carregar dados da API");
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
+      
+
     useEffect(() => {
         getData();
     }, []);
