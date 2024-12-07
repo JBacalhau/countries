@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CountryData, BorderCountry } from "@/types/Card";
 import { IconArrowNarrowLeft } from "@tabler/icons-react";
 import { useTheme } from "@/hooks/useTheme"; // Importando o hook de tema
+import Image from "next/image";
 
 interface CardProps {
   resetFilters: () => void; // Tipando a função resetFilters que vem de PaginaPais
@@ -110,10 +111,13 @@ const Card: React.FC<CardProps> = ({ resetFilters }) => {
 
       <div className="flex flex-col lg:gap-y-0 gap-y-12 lg:gap-x-8 lg:flex-row items-center justify-between">
         <div className="drop-shadow-[0px_0px_15px_rgba(0,0,0,0.15)]">
-          <img
+          <Image
             src={flagImageUrl}
             className="w-[275px] sm:w-[366px] md:w-[550px] h-[210px] sm:h-[350px] md:h-[420px] "
             alt={`${countryData.name.common} Flag`}
+            width={640}
+            height={480}
+            priority 
           />
         </div>
 
